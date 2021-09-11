@@ -24,4 +24,6 @@ char corDoLadoDoIdDaPessa(Cubomagico* cubo,char idLado);
 char encontraIdDaPeca(Cubomagico* cubo,char* ladosPeca,char tam);
 void giraParte(Cubomagico* cubo,char parte, char direcao);
 
+char ladoContrarioDe(Cubomagico* cubo,char corLado);
+
 #endif

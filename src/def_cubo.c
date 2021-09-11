@@ -41,4 +41,46 @@ char corDaPecaPeloId(Cubomagico* cubo,char idLado)
 {
     return (*cubo).lados[idLado];
 }
+//pega todo o cubo como um array de char
+char* pegaStringCubo(Cubomagico* cubo)
+{
+    char* pecas;
+    pecas = (char*) malloc(sizeof(char)*54);
+    int i;
+    for(i=0;i<54;i++)
+    {
+        pecas[i] = (*cubo).lados[i];
+    }
+    return pecas;
+}
 
+char* pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
+{
+    
+}
+//pega a cor do lado contrario do lado dado
+char ladoContrarioDe(Cubomagico* cubo,char corLado)
+{
+    char id = encontraLado(&cubo,corLado);
+    if(id==0)
+        return 45;
+    if(id==45)
+        return 0;
+    if(id<27)
+        return id+18;
+    if(id<45)
+        return id-18;
+    return 100;
+}
+//encontra o id do lado com a cor correspondente
+char encontraLado(Cubomagico* cubo,char corLado)
+{
+    char i;
+    for(i=0;i<54;i+=9)
+    {
+        if((*cubo).lados[i]==corLado)
+            return i;
+    }
+    return 100;
+
+}
