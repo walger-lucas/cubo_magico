@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "def_cubo.h"
 
+char encontraLado(Cubomagico* cubo,char corLado);
+
 //representa o cubo magico
 struct cubomagico {
 
