@@ -19,7 +19,7 @@ char* pegaLado(Cubomagico* cubo, char corDoLado);
 char* pegaAnel(Cubomagico* cubo, char andar);
 //id 0: 1 lado, id impar:2 lados, id par: 3 lados
 char* pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id);
-char corDaPecapeloId(Cubomagico* cubo,char idLado);
+char corDaPecaPeloId(Cubomagico* cubo,char idLado);
 char corDoLadoDoIdDaPessa(Cubomagico* cubo,char idLado);
 char encontraIdDaPeca(Cubomagico* cubo,char* ladosPeca,char tam);
 void giraParte(Cubomagico* cubo,char parte, char direcao);
