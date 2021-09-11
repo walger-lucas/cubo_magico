@@ -3,10 +3,11 @@
 #ifndef _DEF_CUBO
 #define _DEF_CUBO
 
-typedef struct Cubomagico cubomagico;
+
+typedef struct cubomagico Cubomagico;
 
 //cria um cubo com as pecas dadas, devolve nulo caso nao seja valido
-Cubomagico* criaCubo(char* pecas);
+Cubomagico* criaCubo(char pecas[54]);
 void destroiCubo(Cubomagico* cubo);
 
 void centraCuboEm(Cubomagico* cubo, char cor);
@@ -21,9 +22,6 @@ char* pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id);
 char corDaPecapeloId(Cubomagico* cubo,char idLado);
 char corDoLadoDoIdDaPessa(Cubomagico* cubo,char idLado);
 char encontraIdDaPeca(Cubomagico* cubo,char* ladosPeca,char tam);
-
-
-
-
+void giraParte(Cubomagico* cubo,char parte, char direcao);
 
 #endif
