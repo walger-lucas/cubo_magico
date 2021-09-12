@@ -89,7 +89,7 @@ void giraLado(char* lado, int dir)
     {
         aux[1]= lado[1];
         aux[2]= lado[2];
-        for(i=8;i>3;i--)
+        for(i=8;i>2;i--)
         {
             lado[i-2]=lado[i];
         }
