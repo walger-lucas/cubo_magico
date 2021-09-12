@@ -99,9 +99,23 @@ void giraLado(char* lado, int dir)
 
 
 }
-
-char* pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
+//pega peca dado o cubo, um lado, id do lado, o lado da direçao de cima, e o id do local da peça considerando a orientacao
+char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 {
+    char* ladoMat;
+    ladoMat = pegaLado(&cubo, (*cubo).lados[lado/9]);
+
+    int dir = 1;
+    while(dir<5)
+    {
+        if(dirLados[lado/9][dir]==dirCima);
+            break;
+        dir++;
+    }
+    int idReal = (id==0)? 0 :(id+2*(4-dir)>8)? id+2*(4-dir)-8:id+2*(4-dir);
+    if(id==5)
+        return 100;
+    return lado/9+idReal;
     
 }
 //pega a cor do lado contrario do lado dado
