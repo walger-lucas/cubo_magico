@@ -55,6 +55,50 @@ char* pegaStringCubo(Cubomagico* cubo)
     }
     return pecas;
 }
+char* pegaLado(Cubomagico* cubo,char corDoLado)
+{
+    char idLado = encontraLado(&cubo,corDoLado);
+    char* lado;
+    lado = (char*) malloc(sizeof(char)*9);
+    int i;
+    for(i=0;i<9;i++)
+    {
+        lado[i] = (*cubo).lados[idLado+i];
+    }
+    return lado;
+}
+//gira em 90 graus anti horario caso 0, ou 90 graus horario caso 1, considerando olhar de cima e na direção comum
+void giraLado(char* lado, int dir)
+{
+    char aux[2];
+    char signal=-1;
+    int i;
+    if(dir==0)
+    {
+        signal = 1;
+        aux[1]=lado[7];
+        aux[2]=lado[8];
+        for(i=1;i<7;i++)
+        {
+            lado[i+2]=lado[i];
+        }
+        lado[1]= aux[1];
+        lado[2]= aux[2];
+    }
+    else
+    {
+        aux[1]= lado[1];
+        aux[2]= lado[2];
+        for(i=8;i>3;i--)
+        {
+            lado[i-2]=lado[i];
+        }
+        lado[7]=aux[1];
+        lado[8]=aux[2];
+    }
+
+
+}
 
 char* pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 {
