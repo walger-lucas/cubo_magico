@@ -55,6 +55,7 @@ char* pegaStringCubo(Cubomagico* cubo)
     }
     return pecas;
 }
+//pega todo um lado e o coloca em um vetor
 char* pegaLado(Cubomagico* cubo,char corDoLado)
 {
     char idLado = encontraLado(&cubo,corDoLado);
@@ -102,21 +103,25 @@ void giraLado(char* lado, int dir)
 //pega peca dado o cubo, um lado, id do lado, o lado da direçao de cima, e o id do local da peça considerando a orientacao
 char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 {
-    char* ladoMat;
-    ladoMat = pegaLado(&cubo, (*cubo).lados[lado/9]);
-
-    int dir = 1;
-    while(dir<5)
+    int dir;
+    for(dir=0;dir<4;dir++)
     {
         if(dirLados[lado/9][dir]==dirCima);
             break;
-        dir++;
     }
-    int idReal = (id==0)? 0 :(id+2*(4-dir)>8)? id+2*(4-dir)-8:id+2*(4-dir);
-    if(id==5)
+    //caso não encontre o lado retorna 100 como erro
+     if(dir==4)
         return 100;
+    int idReal;
+    //calcula o id real da peca, girando a peca ate que o lado fique alinhado com opostamente ao lado original
+    if(id==0)
+        idReal=0;
+    else if(id+2*(4-dir)>8)
+        idReal = id+2*(4-dir)-8;
+    else
+        idReal = id+2*(4-dir);
+   //retorna o id
     return lado/9+idReal;
-    
 }
 //pega a cor do lado contrario do lado dado
 char ladoContrarioDe(Cubomagico* cubo,char corLado)

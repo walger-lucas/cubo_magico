@@ -13,10 +13,6 @@ const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
 Cubomagico* criaCubo(char pecas[54]);
 void destroiCubo(Cubomagico* cubo);
 
-void centraCuboEm(Cubomagico* cubo, char cor);
-void giraCuboNaDirecao(Cubomagico* cubo, char direcao);
-
-
 char* pegaStringCubo(Cubomagico* cubo);
 char* pegaLado(Cubomagico* cubo, char corDoLado);
 char* pegaAnel(Cubomagico* cubo, char andar);
