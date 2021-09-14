@@ -176,6 +176,8 @@ char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 //0 cima 1 esquerda 2 baixo 3 direita
 char dirPeloLado(char sideId,char upDir,char relativeDir)
 {
+    if(upDir==sideId)
+        return dirLados[relativeDir];
     char dir;
     for(dir=0;dir<4;dir++)
         if(dirLados[sideId/9][dir]==upDir)
@@ -183,7 +185,7 @@ char dirPeloLado(char sideId,char upDir,char relativeDir)
     if(dir==4)
         return 100;
 
-    return (dir+relativeDir<4)? dir+relativeDir : (dir+relativeDir)%4;
+    return dirLados[(dir+relativeDir<4)? dir+relativeDir : (dir+relativeDir)%4];
 
 
 }

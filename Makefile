@@ -11,7 +11,7 @@ CFLAGS = -c -Wall -g
 #Bibliotecas -lm para math.h
 LIBS = -lm
 # .h que devem estar up to date em todos os arquivos
-H_SOURCE_ALL = def.h
+H_SOURCE_ALL = def.h def_cubo.h
 #Arquivos C, H e O
 C_SOURCE = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c $(SRC_DIR)/*/*/*.c)
 H_SOURCE = $(wildcard $(SRC_DIR)/*.h $(SRC_DIR)/*/*.h $(SRC_DIR)/*/*/*.h)
