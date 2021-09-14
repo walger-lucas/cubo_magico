@@ -5,8 +5,9 @@
 
 
 typedef struct cubomagico Cubomagico;
-const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
-                      {0,9,45,36},{0,27,45,9},{9,36,27,18}};
+
+
+char dirPeloLado(char sideId,char upDir,char relativeDir);
 
 
 //cria um cubo com as pecas dadas, devolve nulo caso nao seja valido
@@ -14,8 +15,8 @@ Cubomagico* criaCubo(char pecas[54]);
 void destroiCubo(Cubomagico* cubo);
 
 char* pegaStringCubo(Cubomagico* cubo);
-char* pegaLado(Cubomagico* cubo, char corDoLado);
-char* pegaAnel(Cubomagico* cubo, char andar);
+char* pegaLado(Cubomagico* cubo, char idLado);
+char* pegaAnel(Cubomagico* cubo, char andar,char lado);
 //id 0: 1 lado, id impar:2 lados, id par: 3 lados
 char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id);
 char corDaPecaPeloId(Cubomagico* cubo,char idLado);
