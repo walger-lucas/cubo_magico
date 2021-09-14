@@ -1,8 +1,5 @@
 #include <stdlib.h>
 #include "def_cubo.h"
-
-
-
 //representa o cubo magico
 struct cubomagico {
 
@@ -11,9 +8,7 @@ struct cubomagico {
     //de 1 a 8, sao pegos na direcao antihoraria do cubo de um lado, comecando na parte superior, considerando o lado cima como ponto superior
     //para os lados CIMA e Baixo que nao possuem esse ponteiro, o "Cima" eh o lado Tras
     char lados[54];
-    char ladoAtual;//lado centralizado atual
-    int movimentosFeitos;//quantidade de movimentos feitos giros totais nao sao contados
-    int girosFeitos;//quantidade de giros
+    int movimentosFeitos;//quantidade de movimentos feitos 
 
 };
 const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
@@ -23,7 +18,6 @@ const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
 Cubomagico* criaCubo(char pecas[54])
 {
     Cubomagico* cubo = (Cubomagico*) malloc(sizeof(Cubomagico));
-    cubo->ladoAtual= pecas[0];
     int i;
     for(i=0;i<54;i++)
         (*cubo).lados[i]=pecas[i];
@@ -141,6 +135,7 @@ void giraParte(Cubomagico* cubo,char parte, char direcao)
     }
     free(anel);
     free(lado);
+    cubo->movimentosFeitos++;
 }
 //pega o id do lado com a cor especificada
 char ladoDaCor(Cubomagico* cubo, char cor)
