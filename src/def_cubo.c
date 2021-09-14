@@ -140,6 +140,17 @@ void giraParte(Cubomagico* cubo,char parte, char direcao)
         (*cubo).lados[i+parte]=lado[i];
     }
 }
+char ladoDaCor(Cubomagico* cubo, char cor)
+{
+    int i =0;
+    for(i=0;i<54;i+=9)
+    {
+        if(cor== corDaPecaPeloId(&cubo,i));
+            return i;
+    }
+    return 100;
+
+}
 //pega peca dado o cubo, um lado, id do lado, o lado da direçao de cima, e o id do local da peça considerando a orientacao
 char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 {

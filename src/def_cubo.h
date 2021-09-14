@@ -14,6 +14,7 @@ char dirPeloLado(char sideId,char upDir,char relativeDir);
 Cubomagico* criaCubo(char pecas[54]);
 void destroiCubo(Cubomagico* cubo);
 
+char ladoDaCor(Cubomagico* cubo, char cor);
 char* pegaStringCubo(Cubomagico* cubo);
 char* pegaLado(Cubomagico* cubo, char idLado);
 char* pegaAnel(Cubomagico* cubo, char andar,char lado);
@@ -21,7 +22,6 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado);
 char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id);
 char corDaPecaPeloId(Cubomagico* cubo,char idLado);
 char corDoLadoDoIdDaPessa(Cubomagico* cubo,char idLado);
-char encontraIdDaPeca(Cubomagico* cubo,char* ladosPeca,char tam);
 void giraParte(Cubomagico* cubo,char parte, char direcao);
 
 char ladoContrarioDe(Cubomagico* cubo,char corLado);
