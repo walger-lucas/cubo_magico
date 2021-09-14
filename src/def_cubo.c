@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "def_cubo.h"
 
-char encontraLado(Cubomagico* cubo,char corLado);
+
 
 //representa o cubo magico
 struct cubomagico {
@@ -125,6 +125,7 @@ void giraLado(char* lado, int dir)
 
 
 }
+//gira o lado parte na direcao direcao. 0 antihorario 1 horario.
 void giraParte(Cubomagico* cubo,char parte, char direcao)
 {
     char* anel;
@@ -132,14 +133,16 @@ void giraParte(Cubomagico* cubo,char parte, char direcao)
     anel = pegaAnel(&cubo,1,parte);
     lado = pegaLado(&cubo,parte);
     giraAnel(&cubo,anel,direcao);
-    free(anel);
     giraLado(lado,direcao);
     int i;
     for(i=0;i<9;i++)
     {
         (*cubo).lados[i+parte]=lado[i];
     }
+    free(anel);
+    free(lado);
 }
+//pega o id do lado com a cor especificada
 char ladoDaCor(Cubomagico* cubo, char cor)
 {
     int i =0;
@@ -192,7 +195,7 @@ char dirPeloLado(char sideId,char upDir,char relativeDir)
 //pega a cor do lado contrario do lado dado
 char ladoContrarioDe(Cubomagico* cubo,char corLado)
 {
-    char id = encontraLado(&cubo,corLado);
+    char id = ladoDaCor(&cubo,corLado);
     if(id==0)
         return 45;
     if(id==45)
@@ -236,16 +239,4 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
         ladoAtual = dirPeloLado(ladoAtual,lado,1);//muda o lado observado para a esquerda
     }
     return anel;
-}
-//encontra o id do lado com a cor correspondente
-char encontraLado(Cubomagico* cubo,char corLado)
-{
-    char i;
-    for(i=0;i<54;i+=9)
-    {
-        if((*cubo).lados[i]==corLado)
-            return i;
-    }
-    return 100;
-
 }
