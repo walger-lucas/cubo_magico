@@ -92,29 +92,29 @@ void giraAnel(Cubomagico* cubo,char* anel, char dir)
 //gira em 90 graus anti horario caso 0, ou 90 graus horario caso 1, considerando olhar de cima e na direção comum
 void giraLado(char lado[9], int dir)
 {
-    char aux[2];
+    char ladoaux[9];
     int i;
+    for(i=0;i<9;i++)
+    {
+        ladoaux[i]=lado[i];
+    }
     if(dir==0)
     {
-        aux[0]=lado[7];
-        aux[1]=lado[8];
         for(i=1;i<7;i++)
         {
-            lado[i+2]=lado[i];
+            lado[i+2]=ladoaux[i];
         }
-        lado[1]= aux[0];
-        lado[2]= aux[1];
+        lado[1]= ladoaux[7];
+        lado[2]= ladoaux[8];
     }
     else
     {
-        aux[0]= lado[1];
-        aux[1]= lado[2];
         for(i=8;i>2;i--)
         {
-            lado[i-2]=lado[i];
+            lado[i-2]=ladoaux[i];
         }
-        lado[7]=aux[0];
-        lado[8]=aux[1];
+        lado[7]=ladoaux[1];
+        lado[8]=ladoaux[2];
     }
 
 
@@ -165,12 +165,12 @@ char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
     //calcula o id real da peca, girando a peca ate que o lado fique alinhado com opostamente ao lado original
     if(id==0)
         idReal=0;
-    else if(id+2*(4-dir)>8)
-        idReal = id+2*(4-dir)-8;
+    else if(id+2*dir>8)
+        idReal = id+2*dir-8;
     else
-        idReal = id+2*(4-dir);
+        idReal = id+2*dir;
    //retorna o id
-    return lado/9+idReal;
+    return lado+idReal;
 }
 //pega o lado que esta na direcao relativa relativeDir, do lado sideId, tendo como cima o lado upDir
 //0 cima 1 esquerda 2 baixo 3 direita
@@ -209,6 +209,7 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
     char* anel;
     char pecas[3];
     char ladoAtual=dirLados[lado/9][0];
+    anel = (char*) malloc(sizeof(char)*12);
     if(andar==1)
     {
         pecas[0]= 8;
@@ -227,7 +228,7 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
         pecas[1]=5;
         pecas[2]= 4;
     }
-    anel = (char*) malloc(sizeof(char)*12);
+    
     int i,j;
     for (i=0;i<4;i++)
     {

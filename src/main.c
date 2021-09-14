@@ -11,7 +11,7 @@ int main()
     printf("\nRotacionando Branco antihorario\n\n\n");
     Cubomagico* cubot;
     cubot =criaCubo(oi);
-    giraParte(cubot,ladoDaCor(cubot,'W'),0);
+    giraParte(cubot,ladoDaCor(cubot,'R'),1);
     escreveCubo(pegaStringCubo(cubot));
     
     return 0;
