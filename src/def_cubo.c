@@ -12,7 +12,7 @@ struct cubomagico {
 
 };
 const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
-                      {0,9,45,36},{0,27,45,9},{9,36,27,18}};
+                      {0,18,45,36},{0,27,45,9},{9,36,27,18}};
 //aloca espaco para um cubo magico, inicializando seus valores
 /** OBS: A FUNCAO NO FUTURO RETORNARA NULO QUANDO NAO FOR UMA CUBO VALIDO*/
 Cubomagico* criaCubo(char pecas[54])
@@ -37,7 +37,7 @@ char corDoLadoDoIdDaPessa(Cubomagico* cubo,char idLado)
 //pega o simbolo de cor do id dado no cubo
 char corDaPecaPeloId(Cubomagico* cubo,char idLado)
 {
-    return (*cubo).lados[idLado];
+    return (*cubo).lados[(int)idLado];
 }
 //pega todo o cubo como um array de char
 char* pegaStringCubo(Cubomagico* cubo)
@@ -70,13 +70,13 @@ void giraAnel(Cubomagico* cubo,char* anel, char dir)
     int i;
     for(i=0;i<12;i++)
     {
-        anelCor[i]=corDaPecaPeloId(&cubo,anel[i]);
+        anelCor[i]=corDaPecaPeloId(cubo,anel[i]);
     }
     if(dir==0)
     {
         for(i=0;i<12;i++)
         {
-            (*cubo).lados[anel[i]]= anelCor[(i+3)%12];
+            (*cubo).lados[(int) anel[i]]= anelCor[(i+3)%12];
         }
 
     }
@@ -84,37 +84,37 @@ void giraAnel(Cubomagico* cubo,char* anel, char dir)
     {
         for(i=3;i<15;i++)
         {
-            (*cubo).lados[anel[i%12]]= anelCor[(i-3)];
+            (*cubo).lados[(int)anel[i%12]]= anelCor[(i-3)];
         } 
     }
 
 }
 //gira em 90 graus anti horario caso 0, ou 90 graus horario caso 1, considerando olhar de cima e na direção comum
-void giraLado(char* lado, int dir)
+void giraLado(char lado[9], int dir)
 {
     char aux[2];
     int i;
     if(dir==0)
     {
-        aux[1]=lado[7];
-        aux[2]=lado[8];
+        aux[0]=lado[7];
+        aux[1]=lado[8];
         for(i=1;i<7;i++)
         {
             lado[i+2]=lado[i];
         }
-        lado[1]= aux[1];
-        lado[2]= aux[2];
+        lado[1]= aux[0];
+        lado[2]= aux[1];
     }
     else
     {
-        aux[1]= lado[1];
-        aux[2]= lado[2];
+        aux[0]= lado[1];
+        aux[1]= lado[2];
         for(i=8;i>2;i--)
         {
             lado[i-2]=lado[i];
         }
-        lado[7]=aux[1];
-        lado[8]=aux[2];
+        lado[7]=aux[0];
+        lado[8]=aux[1];
     }
 
 
@@ -124,9 +124,9 @@ void giraParte(Cubomagico* cubo,char parte, char direcao)
 {
     char* anel;
     char* lado;
-    anel = pegaAnel(&cubo,1,parte);
-    lado = pegaLado(&cubo,parte);
-    giraAnel(&cubo,anel,direcao);
+    anel = pegaAnel(cubo,1,parte);
+    lado = pegaLado(cubo,parte);
+    giraAnel(cubo,anel,direcao);
     giraLado(lado,direcao);
     int i;
     for(i=0;i<9;i++)
@@ -143,7 +143,7 @@ char ladoDaCor(Cubomagico* cubo, char cor)
     int i =0;
     for(i=0;i<54;i+=9)
     {
-        if(cor== corDaPecaPeloId(&cubo,i));
+        if(cor == corDaPecaPeloId(cubo,i))
             return i;
     }
     return 100;
@@ -155,7 +155,7 @@ char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
     int dir;
     for(dir=0;dir<4;dir++)
     {
-        if(dirLados[lado/9][dir]==dirCima);
+        if(dirLados[lado/9][dir]==dirCima)
             break;
     }
     //caso não encontre o lado retorna 100 como erro
@@ -177,22 +177,22 @@ char pegaPeca(Cubomagico* cubo, char lado,char dirCima, char id)
 char dirPeloLado(char sideId,char upDir,char relativeDir)
 {
     if(upDir==sideId)
-        return dirLados[relativeDir];
+        return (char) dirLados[sideId/9][(int)relativeDir];
     char dir;
     for(dir=0;dir<4;dir++)
-        if(dirLados[sideId/9][dir]==upDir)
+        if(dirLados[sideId/9][(int)dir]==upDir)
             break;
     if(dir==4)
         return 100;
 
-    return dirLados[(dir+relativeDir<4)? dir+relativeDir : (dir+relativeDir)%4];
+    return (char) dirLados[sideId/9][(dir+relativeDir<4)? dir+relativeDir : (dir+relativeDir)%4];
 
 
 }
 //pega a cor do lado contrario do lado dado
 char ladoContrarioDe(Cubomagico* cubo,char corLado)
 {
-    char id = ladoDaCor(&cubo,corLado);
+    char id = ladoDaCor(cubo,corLado);
     if(id==0)
         return 45;
     if(id==45)
@@ -232,7 +232,7 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
     for (i=0;i<4;i++)
     {
         for(j=0;j<3;j++)//pega todas as pessas de um lado do anel
-            anel[i*3+j]= pegaPeca(&cubo,ladoAtual,lado,pecas[j]);
+            anel[i*3+j]= pegaPeca(cubo,ladoAtual,lado,pecas[j]);
         ladoAtual = dirPeloLado(ladoAtual,lado,1);//muda o lado observado para a esquerda
     }
     return anel;

@@ -27,7 +27,14 @@ $(PROJ_NAME): $(OBJS)
 	$(CC) $^ -o  $@ 
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
-
+$(OBJ_DIR)/io_cubo.o: io_cubo.c io_cubo.h def.h def_cubo.h
+	@ echo 'Building target using GCC compiler: $<'
+	$(CC) $< $(LIBS) $(CFLAGS) -o $@
+	@ echo ' '
+$(OBJ_DIR)/def_cubo.o: def_cubo.c def_cubo.h 
+	@ echo 'Building target using GCC compiler: $<'
+	$(CC) $< $(LIBS) $(CFLAGS) -o $@
+	@ echo ' '	
 $(OBJ_DIR)/%.o: %.c %.h H_SOURCE_ALL
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@

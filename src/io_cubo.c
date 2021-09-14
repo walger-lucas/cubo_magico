@@ -3,7 +3,7 @@
 #include "io_cubo.h"
 #include "def_cubo.h"
 #include "def.h"
-
+void leLado(char lados[54],char idLado);
 
 void limpaTerminal()
 {
@@ -17,18 +17,18 @@ void limpaTerminal()
 void leCubo(char lados[54])
 {
     printf("Sendo\n W: White: Branco \t G: Green: Verde \t R: Red: Vermelho\n B: Blue: Azul \t O: Orange: Laranja \t Y: Yellow: Amarelo\n");
-    printf("Escreva a cor do topo do cubo");
-    scanf("%c",&lados[0]);
-    printf("Escreva a cor da base do cubo");
-    scanf("%c",&lados[45]);
-    printf("Escreva a cor da parte traseira do cubo");
-    scanf("%c",&lados[9]);
-    printf("Escreva a cor da parte frontal do cubo");
-    scanf("%c",&lados[27]);
-    printf("Escreva a cor da parte esquerda do cubo");
-    scanf("%c",&lados[18]);
-    printf("Escreva a cor da parte direita do cubo");
-    scanf("%c",&lados[36]);
+    printf("Escreva a cor do topo do cubo: ");
+    scanf(" %c",&lados[0]);
+    printf("Escreva a cor da base do cubo: ");
+    scanf(" %c",&lados[45]);
+    printf("Escreva a cor da parte traseira do cubo: ");
+    scanf(" %c",&lados[9]);
+    printf("Escreva a cor da parte frontal do cubo: ");
+    scanf(" %c",&lados[27]);
+    printf("Escreva a cor da parte esquerda do cubo: ");
+    scanf(" %c",&lados[18]);
+    printf("Escreva a cor da parte direita do cubo: ");
+    scanf(" %c",&lados[36]);
 
     char cor1[10],cor2[10];
     char i;
@@ -39,8 +39,8 @@ void leCubo(char lados[54])
     printf("\n\n");
     for(i=9;i<45;i+=9)
     {
-        idToString(cor2,lados[i]);
-        printf("Escreva o lado da cor %s, considerando a parte de cima apontada para a cor %s\n",cor2,cor1);
+        idToString(cor2,lados[(int)i]);
+        printf("Escreva o lado da cor %s, considerando a parte de cima apontada para a cor %s\n\n",cor2,cor1);
         leLado(lados,i);
         printf("\n\n");
     }
@@ -57,14 +57,17 @@ void leLado(char lados[54],char idLado)
     char ladoIds[9]= {2,1,8,3,0,7,4,5,6};
     int i;
     for (i=0;i<9;i++)
-        scanf("%c",&lados[idLado+ladoIds[i]]);
+    {
+        scanf(" %c",&lados[idLado+ladoIds[i]]);
+        
+    }
     
 }
 
 void idToString(char cor[10],char idCor)
 {
     char cores[6][10]={"Branco","Verde","Azul","Vermelho","Laranja","Amarelo"};
-    char id;
+    int id;
     if(idCor=='W')
         id=0;
     else if(idCor=='G')
@@ -88,12 +91,12 @@ void  escreveCubo(char* lados)
     int i;
     for(i=0;i<54;i+=9)
     {
-        printf("  %c  \n",lados[dirPeloLado(i,i,0)]);
+        printf("  %c  \n",lados[(int)dirPeloLado((char)i,(char)i,0)]);
         printf(" %c%c%c \n",lados[i+2],lados[i+1],lados[i+8]);
-        printf("%c",lados[dirPeloLado(i,i,1)]);
+        printf("%c",lados[(int)dirPeloLado((char)i,(char)i,1)]);
         printf("%c%c%c",lados[i+3],lados[i],lados[i+7]);
-        printf("%c\n",lados[dirPeloLado(i,i,3)]);
+        printf("%c\n",lados[(int)dirPeloLado((char)i,(char)i,3)]);
         printf(" %c%c%c \n",lados[i+4],lados[i+5],lados[i+6]);
-        printf("  %c  \n\n\n",lados[dirPeloLado(i,i,0)]);
+        printf("  %c  \n\n\n",lados[(int)dirPeloLado((char)i,(char)i,2)]);
     }
 }
