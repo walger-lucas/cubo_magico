@@ -4,7 +4,7 @@
 #include "def_cubo.h"
 #include "def.h"
 void leLado(char lados[54],char idLado);
-
+//limpa terminal
 void limpaTerminal()
 {
     #if WINDOWS
@@ -13,7 +13,7 @@ void limpaTerminal()
         system("clear");
     #endif
 }
-
+//le os lados do cubo
 void leCubo(char lados[54])
 {
     printf("Sendo\n W: White: Branco \t G: Green: Verde \t R: Red: Vermelho\n B: Blue: Azul \t O: Orange: Laranja \t Y: Yellow: Amarelo\n");
@@ -52,6 +52,7 @@ void leCubo(char lados[54])
 
 
 }
+//le o cubo na orientacao correta
 void leLado(char lados[54],char idLado)
 {
     char ladoIds[9]= {2,1,8,3,0,7,4,5,6};
@@ -63,7 +64,7 @@ void leLado(char lados[54],char idLado)
     }
     
 }
-
+//pega o id char e transforma em uma string
 void idToString(char cor[10],char idCor)
 {
     char cores[6][10]={"Branco","Verde","Azul","Vermelho","Laranja","Amarelo"};
@@ -85,6 +86,7 @@ void idToString(char cor[10],char idCor)
         cor[i]=cores[id][i];
     cor[i]='\0';
 }
+//printa todos os lados do cubo
 void  escreveCubo(char* lados)
 {
     printf("\n\n");

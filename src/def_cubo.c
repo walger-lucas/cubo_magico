@@ -92,6 +92,7 @@ void giraAnel(Cubomagico* cubo,char* anel, char dir)
 //gira em 90 graus anti horario caso 0, ou 90 graus horario caso 1, considerando olhar de cima e na direção comum
 void giraLado(char lado[9], int dir)
 {
+    //faz copia do vetor e depois o utiliza para girar
     char ladoaux[9];
     int i;
     for(i=0;i<9;i++)
@@ -124,12 +125,12 @@ void giraParte(Cubomagico* cubo,char parte, char direcao)
 {
     char* anel;
     char* lado;
-    anel = pegaAnel(cubo,1,parte);
-    lado = pegaLado(cubo,parte);
-    giraAnel(cubo,anel,direcao);
-    giraLado(lado,direcao);
+    anel = pegaAnel(cubo,1,parte);//pega o anel que sera girado
+    lado = pegaLado(cubo,parte);//pega o lado que sera girado
+    giraAnel(cubo,anel,direcao);//gira o anel na direcao
+    giraLado(lado,direcao); // gira o lado na direcao
     int i;
-    for(i=0;i<9;i++)
+    for(i=0;i<9;i++)//coloca o lado novamente no cubo
     {
         (*cubo).lados[i+parte]=lado[i];
     }
@@ -179,6 +180,7 @@ char dirPeloLado(char sideId,char upDir,char relativeDir)
     if(upDir==sideId)
         return (char) dirLados[sideId/9][(int)relativeDir];
     char dir;
+    //encontra a direcao cima procurando entre as direcoes possiveis
     for(dir=0;dir<4;dir++)
         if(dirLados[sideId/9][(int)dir]==upDir)
             break;
@@ -210,7 +212,7 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
     char pecas[3];
     char ladoAtual=dirLados[lado/9][0];
     anel = (char*) malloc(sizeof(char)*12);
-    if(andar==1)
+    if(andar==1)//seta os ids dos aneis que devem ser pegos em cada lado
     {
         pecas[0]= 8;
         pecas[1]=1;
@@ -237,4 +239,48 @@ char* pegaAnel(Cubomagico* cubo, char andar,char lado)
         ladoAtual = dirPeloLado(ladoAtual,lado,1);//muda o lado observado para a esquerda
     }
     return anel;
+}
+//dado um lado de uma peca, pega os outros, dando o numero de lados
+char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados)
+{
+    
+    if(idAtual%9==0)
+    {
+        *lados = 0;
+        return NULL;
+    }
+    char* outLads;
+    *lados= 2-idAtual%9%2;
+    outLads= (char*) malloc(sizeof(char)*(*lados));
+    if(*lados==1)
+    {
+        outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][idAtual%9/2],idAtual/9,1);
+    }
+    else
+    {
+        if(idAtual%9==2)
+        {
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9,2); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9,8); 
+        }
+        else if(idAtual%9==4)
+        {
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9,8); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9,2); 
+        }
+        else if(idAtual%9==6)
+        {
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9,2); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9,8); 
+        }
+        else
+        {
+          outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9,8); 
+          outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9,2);   
+        }
+        return outLads;
+    }
+
+
+
 }
