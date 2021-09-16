@@ -31,6 +31,10 @@ $(OBJ_DIR)/io_cubo.o: io_cubo.c io_cubo.h def.h def_cubo.h
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@
 	@ echo ' '
+$(OBJ_DIR)/montador_cubo.o: montador_cubo.c montador_cubo.h def.h def_cubo.h
+	@ echo 'Building target using GCC compiler: $<'
+	$(CC) $< $(LIBS) $(CFLAGS) -o $@
+	@ echo ' '
 $(OBJ_DIR)/def_cubo.o: def_cubo.c def_cubo.h 
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@

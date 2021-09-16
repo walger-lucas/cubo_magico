@@ -191,6 +191,21 @@ char dirPeloLado(char sideId,char upDir,char relativeDir)
 
 
 }
+int pegaMovs(Cubomagico* cubo)
+{
+    return cubo->movimentosFeitos;
+}
+int direcaoDoLado( int ladoAtual,int ladoCima, int ladoEncontrar)
+{
+    int i;
+    for(i=0;i<4;i++)
+    {
+        if(dirPeloLado(ladoAtual,ladoCima,i)==ladoEncontrar)
+            return i;
+    }
+    return 100;
+}
+
 //pega a cor do lado contrario do lado dado
 char ladoContrarioDe(Cubomagico* cubo,char corLado)
 {
@@ -254,14 +269,14 @@ char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados)
     outLads= (char*) malloc(sizeof(char)*(*lados));
     if(*lados==1)
     {
-        outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][idAtual%9/2],idAtual/9,1);
+        outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][idAtual%9/2],idAtual/9*9,1);
     }
     else
     {
         if(idAtual%9==2)
         {
-           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9,2); 
-           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9,8); 
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9*9,2); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9*9,8); 
         }
         else if(idAtual%9==4)
         {
@@ -278,9 +293,9 @@ char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados)
           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9,8); 
           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9,2);   
         }
-        return outLads;
+        
     }
 
-
+    return outLads;
 
 }

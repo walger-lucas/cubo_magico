@@ -13,7 +13,9 @@ char dirPeloLado(char sideId,char upDir,char relativeDir);
 //cria um cubo com as pecas dadas, devolve nulo caso nao seja valido
 Cubomagico* criaCubo(char pecas[54]);
 void destroiCubo(Cubomagico* cubo);
-
+char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados);
+int direcaoDoLado(int ladoAtual,int ladoCima, int ladoEncontrar);
+int pegaMovs(Cubomagico* cubo);
 char ladoDaCor(Cubomagico* cubo, char cor);
 char* pegaStringCubo(Cubomagico* cubo);
 char* pegaLado(Cubomagico* cubo, char idLado);
