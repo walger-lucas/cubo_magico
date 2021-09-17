@@ -4,9 +4,9 @@
 #include <stdio.h>
 int main()
 {
-    //char oi[55] ="WYOWWWGWBGBOOYYGWGRRWGWGWOBBBOBBRGROOOYYRGBGYYORYYBRRR";
-    char cubo[54];
-    leCubo(cubo);
+    char cubo[55] ="WWWWGWBWBGGOYBOYBBRRORGOYBWBBOYOGWRWOORYRORGYYGYBGRGYR";
+    //char cubo[54];
+    //leCubo(cubo);
     escreveCubo(cubo);
     printf("\nfazendo cubo\n\n\n");
     Cubomagico* cubot;

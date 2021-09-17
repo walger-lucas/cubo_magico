@@ -280,18 +280,18 @@ char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados)
         }
         else if(idAtual%9==4)
         {
-           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9,8); 
-           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9,2); 
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][1],idAtual/9*9,8); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9*9,2); 
         }
         else if(idAtual%9==6)
         {
-           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9,2); 
-           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9,8); 
+           outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9*9,2); 
+           outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][2],idAtual/9*9,8); 
         }
         else
         {
-          outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9,8); 
-          outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9,2);   
+          outLads[0]=pegaPeca(cubo,dirLados[idAtual/9][3],idAtual/9*9,8); 
+          outLads[1]=pegaPeca(cubo,dirLados[idAtual/9][0],idAtual/9*9,2);   
         }
         
     }
