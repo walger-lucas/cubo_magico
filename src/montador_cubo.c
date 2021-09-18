@@ -117,7 +117,7 @@ char pecaForaDoLado(char *peca,int lado);
         }
 
     }
-    
+    //tira do topo
     for(i=2;i<9;i+=2)
     {
         if(corDaPecaPeloId(cubo,45+i)==corDaPecaPeloId(cubo,0))
