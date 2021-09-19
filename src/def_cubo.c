@@ -220,6 +220,18 @@ char ladoContrarioDe(Cubomagico* cubo,char corLado)
         return id-18;
     return 100;
 }
+char ladoContrarioDoLado(Cubomagico* cubo,char id)
+{
+    if(id==0)
+        return 45;
+    if(id==45)
+        return 0;
+    if(id<27)
+        return id+18;
+    if(id<45)
+        return id-18;
+    return 100;
+}
 //pega o anel de pecas naquele andar(1,2 ou 3) e transforma em um array de char,considerando o lado como o andar 0
 char* pegaAnel(Cubomagico* cubo, char andar,char lado)
 {

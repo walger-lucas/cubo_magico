@@ -4,7 +4,7 @@
 #include <stdio.h>
 int main()
 {
-    //char cubo[55] ="WWWWGWBWBGGOYBOYBBRRORGOYBWBBOYOGWRWOORYRORGYYGYBGRGYR";
+    //char cubo[55] ="WWWWWWWWWGGGGROBOGRRRYORYRRBBBYGBYRBOOOBOGYOOYBBYGYRGY";
     char cubo[54];
     leCubo(cubo);
     escreveCubo(cubo);
@@ -16,12 +16,17 @@ int main()
     Movimento* moves;
     
     moves = montaCubo(cubot);
-    int i;
+    int i,j=0;
     char nome[10];
+    printf("%d\n\n",pegaMovs(cubot));
     for(i=0;i<pegaMovs(cubot);i++)
     {
-        idToString(nome,corDaPecaPeloId(cubot,moves[i].idLado));
-        printf("%s %s\n",nome,(moves[i].direcao)? "Horario":"Anti-Horario");
+        printf("%f /100\n",i/(float)pegaMovs(cubot)*100);
+        
+            idToString(nome,corDaPecaPeloId(cubot,moves[i].idLado));
+            printf("%s %s\n",nome,(moves[i].direcao)? "Horario":"Anti-Horario");
+        getchar();
+        
 
     }
     escreveCubo(pegaStringCubo(cubot));

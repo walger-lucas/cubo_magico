@@ -2,6 +2,7 @@
 #include "montador_cubo.h"
 int montaCruzInicial(Cubomagico* cubo,Movimento* moves);
 void movimenta(Cubomagico* cubo, Movimento* moves,char idLado, char dir);
+int montaSegAndar(Cubomagico* cubo, Movimento* moves);
 void gira(Cubomagico* cubo, Movimento* moves,char idLado,char ladoDir,char ladoFin);
 char pecaNoLado(char *peca,int lado);
 char pecaForaDoLado(char *peca,int lado);
@@ -12,6 +13,7 @@ char pecaForaDoLado(char *peca,int lado);
      moves = (Movimento*) malloc(sizeof(Movimento)*1000);
     montaCruzInicial(cubo,moves);
     montaPrimAndar(cubo,moves);
+    montaSegAndar(cubo,moves);
     return moves;
 
  }
@@ -174,6 +176,82 @@ char pecaForaDoLado(char *peca,int lado);
         montaPrimAndar(cubo,moves);
     return pegaMovs(cubo);
  }
+
+int montaSegAndar(Cubomagico* cubo, Movimento* moves)
+{
+    char ladoFrente,ladoCorFrente,ladoCorCima,*outLados;
+    int i,lados;
+    for(i=1;i<8;i+=2)
+    {
+        outLados =pegaOutrosLados(cubo,45+i,&lados);
+        ladoFrente= outLados[0]/9*9;
+        ladoCorCima=ladoDaCor(cubo,corDaPecaPeloId(cubo,45+i));
+        ladoCorFrente=ladoDaCor(cubo,corDaPecaPeloId(cubo,outLados[0]));
+        if(corDaPecaPeloId(cubo,45+i)!=corDaPecaPeloId(cubo,45)&&corDaPecaPeloId(cubo,outLados[0])!=corDaPecaPeloId(cubo,45))
+        {
+            gira(cubo,moves,45,ladoFrente,ladoContrarioDoLado(cubo,ladoCorCima));
+            gira(cubo,moves,ladoCorCima,ladoCorFrente,45);
+            gira(cubo,moves,45,ladoContrarioDoLado(cubo,ladoCorCima),ladoCorFrente);
+            gira(cubo,moves,ladoCorCima,45,ladoCorFrente);
+            movimenta(cubo,moves,45,0);
+            movimenta(cubo,moves,45,0);
+            gira(cubo,moves,ladoCorFrente,0,ladoCorCima);
+            movimenta(cubo,moves,45,0);
+            movimenta(cubo,moves,45,0);
+            gira(cubo,moves,ladoCorFrente,ladoCorCima,0);
+        }
+        free(outLados);
+    }
+    int corretos=0,pecaAtual;
+    for(i=0;i<4;i++)
+    {
+        pecaAtual=pegaPeca(cubo,dirPeloLado(0,0,i),0,3); 
+        outLados= pegaOutrosLados(cubo,pecaAtual,&lados);
+        if(corDaPecaPeloId(cubo,pecaAtual)==corDoLadoDoIdDaPessa(cubo,pecaAtual)
+        &&corDaPecaPeloId(cubo,outLados[0])==corDoLadoDoIdDaPessa(cubo,outLados[0]))
+        {
+            corretos++;
+        }
+        else if(corDaPecaPeloId(cubo,pecaAtual)!=corDaPecaPeloId(cubo,45) 
+        && corDaPecaPeloId(cubo,outLados[0])!=corDaPecaPeloId(cubo,45))
+        {
+            ladoCorFrente=ladoDaCor(cubo,corDaPecaPeloId(cubo,outLados[0]));
+            ladoCorCima=ladoDaCor(cubo,corDaPecaPeloId(cubo,pecaAtual));
+            free(outLados);
+            break;
+        }
+        free(outLados);
+    }
+    
+    if(corretos!=4)
+    {
+        for(i=1;i<8;i+=2)
+        {
+            outLados =pegaOutrosLados(cubo,45+i,&lados); 
+            if(corDaPecaPeloId(cubo,45+i)==corDaPecaPeloId(cubo,45) 
+        || corDaPecaPeloId(cubo,outLados[0])==corDaPecaPeloId(cubo,45))
+            {
+                ladoFrente= outLados[0]/9*9;
+                free(outLados);
+                break;
+            }
+            free(outLados);
+        }
+        gira(cubo,moves,45,ladoFrente,ladoContrarioDoLado(cubo,ladoCorCima));
+        gira(cubo,moves,ladoCorCima,ladoCorFrente,45);            
+        gira(cubo,moves,45,ladoContrarioDoLado(cubo,ladoCorCima),ladoCorFrente);
+        gira(cubo,moves,ladoCorCima,45,ladoCorFrente);
+        movimenta(cubo,moves,45,0);
+        movimenta(cubo,moves,45,0);            
+        gira(cubo,moves,ladoCorFrente,0,ladoCorCima);
+        movimenta(cubo,moves,45,0);
+        movimenta(cubo,moves,45,0);
+        gira(cubo,moves,ladoCorFrente,ladoCorCima,0);
+        montaSegAndar(cubo,moves);
+    }
+    return pegaMovs(cubo);
+
+}
  char pecaNoLado(char *peca,int lado)
  {
     if(peca[0]/9*9==lado)
