@@ -7,6 +7,8 @@ void gira(Cubomagico* cubo, Movimento* moves,char idLado,char ladoDir,char ladoF
 char pecaNoLado(char *peca,int lado);
 char pecaForaDoLado(char *peca,int lado);
  int montaPrimAndar(Cubomagico* cubo, Movimento* moves);
+ int montaCruzAmarela(Cubomagico* cubo, Movimento* moves);
+ int montaLateralAmarela(Cubomagico* cubo, Movimento* moves);
  Movimento* montaCubo(Cubomagico* cubo)
  {
      Movimento* moves;
@@ -14,6 +16,8 @@ char pecaForaDoLado(char *peca,int lado);
     montaCruzInicial(cubo,moves);
     montaPrimAndar(cubo,moves);
     montaSegAndar(cubo,moves);
+    montaCruzAmarela(cubo, moves);
+    montaLateralAmarela(cubo,moves);
     return moves;
 
  }
@@ -215,8 +219,8 @@ int montaSegAndar(Cubomagico* cubo, Movimento* moves)
         else if(corDaPecaPeloId(cubo,pecaAtual)!=corDaPecaPeloId(cubo,45) 
         && corDaPecaPeloId(cubo,outLados[0])!=corDaPecaPeloId(cubo,45))
         {
-            ladoCorFrente=ladoDaCor(cubo,corDaPecaPeloId(cubo,outLados[0]));
-            ladoCorCima=ladoDaCor(cubo,corDaPecaPeloId(cubo,pecaAtual));
+            ladoCorFrente=ladoDaCor(cubo,corDaPecaPeloId(cubo,pecaAtual/9*9));
+            ladoCorCima=ladoDaCor(cubo,corDaPecaPeloId(cubo,outLados[0]/9*9));
             free(outLados);
             break;
         }
@@ -233,24 +237,126 @@ int montaSegAndar(Cubomagico* cubo, Movimento* moves)
             {
                 ladoFrente= outLados[0]/9*9;
                 free(outLados);
+                 gira(cubo,moves,45,ladoFrente,ladoContrarioDoLado(cubo,ladoCorCima));
+                 gira(cubo,moves,ladoCorCima,ladoCorFrente,45);            
+                 gira(cubo,moves,45,ladoContrarioDoLado(cubo,ladoCorCima),ladoCorFrente);
+                 gira(cubo,moves,ladoCorCima,45,ladoCorFrente);
+                 movimenta(cubo,moves,45,0);
+                 movimenta(cubo,moves,45,0);            
+                 gira(cubo,moves,ladoCorFrente,0,ladoCorCima);
+                 movimenta(cubo,moves,45,0);
+                 movimenta(cubo,moves,45,0);
+                 gira(cubo,moves,ladoCorFrente,ladoCorCima,0);
+                 
                 break;
             }
             free(outLados);
         }
-        gira(cubo,moves,45,ladoFrente,ladoContrarioDoLado(cubo,ladoCorCima));
-        gira(cubo,moves,ladoCorCima,ladoCorFrente,45);            
-        gira(cubo,moves,45,ladoContrarioDoLado(cubo,ladoCorCima),ladoCorFrente);
-        gira(cubo,moves,ladoCorCima,45,ladoCorFrente);
-        movimenta(cubo,moves,45,0);
-        movimenta(cubo,moves,45,0);            
-        gira(cubo,moves,ladoCorFrente,0,ladoCorCima);
-        movimenta(cubo,moves,45,0);
-        movimenta(cubo,moves,45,0);
-        gira(cubo,moves,ladoCorFrente,ladoCorCima,0);
         montaSegAndar(cubo,moves);
     }
     return pegaMovs(cubo);
 
+}
+void movimentosCruzAmarela(Cubomagico* cubo, Movimento* moves,char frente, char cima)
+{
+    movimenta(cubo,moves,frente,1);
+    movimenta(cubo,moves,dirPeloLado(frente,cima,3),1);
+    movimenta(cubo,moves,cima,1);
+    movimenta(cubo,moves,dirPeloLado(frente,cima,3),0);
+    movimenta(cubo,moves,cima,0);
+    movimenta(cubo,moves,frente,0);
+
+}
+int montaCruzAmarela(Cubomagico* cubo, Movimento* moves)
+{
+    if(corDaPecaPeloId(cubo,45+1)!=corDaPecaPeloId(cubo,45) &&
+    corDaPecaPeloId(cubo,45+3)!=corDaPecaPeloId(cubo,45) &&
+    corDaPecaPeloId(cubo,45+5)!=corDaPecaPeloId(cubo,45) &&
+    corDaPecaPeloId(cubo,45+7)!=corDaPecaPeloId(cubo,45))
+        movimentosCruzAmarela(cubo,moves,9,0);
+
+    int i;
+    for(i=0;i<4;i++)
+    {
+        if(corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),5))==corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),7))==corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),1))!=corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),3))!=corDaPecaPeloId(cubo,45))
+        {
+            movimentosCruzAmarela(cubo,moves,dirPeloLado(45,45,i),45);
+            break;
+        }   
+    }
+    for(i=0;i<4;i++)
+    {
+        if(corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),3))==corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),7))==corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),1))!=corDaPecaPeloId(cubo,45) &&
+        corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),5))!=corDaPecaPeloId(cubo,45))
+        {
+            movimentosCruzAmarela(cubo,moves,dirPeloLado(45,45,i),45);
+            break;
+        }   
+    }
+    return pegaMovs(cubo);
+}
+void movimentosLateralAmarela(Cubomagico* cubo, Movimento* moves,char frente, char cima)
+{
+    char direita= dirPeloLado(frente,cima,3);
+    movimenta(cubo,moves,direita,1);
+    movimenta(cubo,moves,cima,1);
+    movimenta(cubo,moves,direita,0);
+    movimenta(cubo,moves,cima,1);
+    movimenta(cubo,moves,direita,1);
+    movimenta(cubo,moves,cima,1);
+    movimenta(cubo,moves,cima,1);
+    movimenta(cubo,moves,direita,0);
+}
+int montaLateralAmarela(Cubomagico* cubo, Movimento* moves)
+{
+    int i;
+    char frente;
+    for(i=0;i<4;i++)
+    {
+        frente = dirPeloLado(45,45,i);
+        if((corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) == corDaPecaPeloId(cubo,45) //1
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) == corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) != corDaPecaPeloId(cubo,45)) || //2
+        (corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) == corDaPecaPeloId(cubo,45) 
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) == corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,frente,45,2)) == corDaPecaPeloId(cubo,45)) || //3
+        (corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) == corDaPecaPeloId(cubo,45) 
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) == corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,frente,45,2)) == corDaPecaPeloId(cubo,45)) || //4 E 5
+        (corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,1),45,8)) == corDaPecaPeloId(cubo,45) 
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,1),45,2)) == corDaPecaPeloId(cubo,45))) 
+        {
+            movimentosLateralAmarela(cubo,moves,frente,45);
+            break;
+        }
+    }
+    int j;
+    for(j=0;j<2;j++)
+    {
+        for(i=0;i<4;i++)
+        {
+           frente = dirPeloLado(45,45,i%4);
+           if(corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) == corDaPecaPeloId(cubo,45) 
+           &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) != corDaPecaPeloId(cubo,45)
+           &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) != corDaPecaPeloId(cubo,45)
+           &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) != corDaPecaPeloId(cubo,45))
+           {
+               movimentosLateralAmarela(cubo,moves,frente,45);
+               break;
+           }
+        }
+    }
+    return pegaMovs(cubo);
 }
  char pecaNoLado(char *peca,int lado)
  {
