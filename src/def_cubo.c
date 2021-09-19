@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "def_cubo.h"
 //representa o cubo magico
 struct cubomagico {
@@ -147,6 +148,7 @@ char ladoDaCor(Cubomagico* cubo, char cor)
         if(cor == corDaPecaPeloId(cubo,i))
             return i;
     }
+    printf("erro no Lado da cor");
     return 100;
 
 }
@@ -185,7 +187,11 @@ char dirPeloLado(char sideId,char upDir,char relativeDir)
         if(dirLados[sideId/9][(int)dir]==upDir)
             break;
     if(dir==4)
+    {
+        printf("erro dir pelo lado");
         return 100;
+    }
+        
 
     return (char) dirLados[sideId/9][(dir+relativeDir<4)? dir+relativeDir : (dir+relativeDir)%4];
 
@@ -203,6 +209,7 @@ int direcaoDoLado( int ladoAtual,int ladoCima, int ladoEncontrar)
         if(dirPeloLado(ladoAtual,ladoCima,i)==ladoEncontrar)
             return i;
     }
+    printf("erro direcao do lado");
     return 100;
 }
 
@@ -218,6 +225,7 @@ char ladoContrarioDe(Cubomagico* cubo,char corLado)
         return id+18;
     if(id<45)
         return id-18;
+    printf("erro lado contrario");
     return 100;
 }
 char ladoContrarioDoLado(Cubomagico* cubo,char id)
@@ -230,6 +238,7 @@ char ladoContrarioDoLado(Cubomagico* cubo,char id)
         return id+18;
     if(id<45)
         return id-18;
+         printf("erro lado contrario");
     return 100;
 }
 //pega o anel de pecas naquele andar(1,2 ou 3) e transforma em um array de char,considerando o lado como o andar 0
@@ -274,6 +283,7 @@ char* pegaOutrosLados(Cubomagico* cubo,char idAtual, int* lados)
     if(idAtual%9==0)
     {
         *lados = 0;
+         printf("erro pega outros lados");
         return NULL;
     }
     char* outLads;
