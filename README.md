@@ -43,9 +43,17 @@ utilizando a funcao com 54 lados em arrayCubo.
 -Depois utilize essa base:
     Cubomagico* cubo;
     cubo =criaCubo(ArrayCubo);
-    Movimento* moves;
-    int pontosFinais[7];
-    moves = montaCubo(cubot,pontosFinais);
+    if(cubo != NULL)
+    {
+        Movimento* moves;
+        int pontosFinais[7];
+        moves = montaCubo(cubot,pontosFinais);
+    }
+    else
+    {
+        #O Cubo dado eh invalido
+        ESCREVA SEU PROPRIO CODIGO PARA LIDAR COM ISSO.
+    }
 -moves eh um array de movimentos, com tamanho escrito em pontosFinais[6]
 cada movimento tem um idLado e uma direcao, o idLado dividido por nove, possui o mesmo codigo da funcao UneLadosemArray, ou voce pode lembrar, 0: cima 9: tras 18: esquerda 27: frente 36: direita 45: baixo
 a direcao, 1 eh horario e 0 eh anti-horario
