@@ -11,7 +11,7 @@ CFLAGS = -c -Wall -g
 #Bibliotecas -lm para math.h
 LIBS = -lm
 # .h que devem estar up to date em todos os arquivos
-H_SOURCE_ALL = def.h def_cubo.h
+H_SOURCE_ALL = def_cubo.h
 #Arquivos C, H e O
 C_SOURCE = $(wildcard $(SRC_DIR)/*.c $(SRC_DIR)/*/*.c $(SRC_DIR)/*/*/*.c)
 H_SOURCE = $(wildcard $(SRC_DIR)/*.h $(SRC_DIR)/*/*.h $(SRC_DIR)/*/*/*.h)
@@ -27,11 +27,12 @@ $(PROJ_NAME): $(OBJS)
 	$(CC) $^ -o  $@ 
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
-$(OBJ_DIR)/io_cubo.o: io_cubo.c io_cubo.h def.h def_cubo.h
+####################################################### inicio dos nescessários
+$(OBJ_DIR)/io_cubo.o: io_cubo.c io_cubo.h def_cubo.h
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@
 	@ echo ' '
-$(OBJ_DIR)/montador_cubo.o: montador_cubo.c montador_cubo.h def.h def_cubo.h
+$(OBJ_DIR)/montador_cubo.o: montador_cubo.c montador_cubo.h def_cubo.h
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@
 	@ echo ' '
@@ -39,6 +40,7 @@ $(OBJ_DIR)/def_cubo.o: def_cubo.c def_cubo.h
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@
 	@ echo ' '	
+############################################################################Fim dos necessarios
 $(OBJ_DIR)/%.o: %.c %.h H_SOURCE_ALL
 	@ echo 'Building target using GCC compiler: $<'
 	$(CC) $< $(LIBS) $(CFLAGS) -o $@

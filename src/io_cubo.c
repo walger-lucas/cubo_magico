@@ -48,13 +48,22 @@ cada array deve dar o as cores na sequencia:
 012
 345
 678 
+o array lados tem 0: como cima, 1: tras 2: esquerda 3:frente 4:direita 5:baixo
 sendo que a direção cima, eh aquela onde esta o lado cima, caso seja o proprio lado cima, ou o lado baixo, essa direcao eh onde
 esta o lado tras
 o arrayCubo eh o array resultante que pode ser utilizado para criar um cubo
 */
-void UneLadosEmArray(int arrayCubo[54],int frente[9],int tras[9],int cima[9],int baixo[9],int esquerda[9],int direita[9])
+void UneLadosEmArray(char arrayCubo[54],char lados[6][9])
 {
-
+    char ladoIds[9]= {2,1,8,3,0,7,4,5,6};
+    int i,j;
+    for (i=0;i<6;i++)
+    {
+        for(j=0;j<9;j++)
+        {
+            arrayCubo[i*9+ladoIds[j]] =lados[i][j];
+        }
+    }
 }
 //le o cubo na orientacao correta
 void leLado(char lados[54],char idLado)
