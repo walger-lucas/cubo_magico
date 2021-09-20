@@ -4,7 +4,7 @@
 #include <stdio.h>
 int main()
 {
-    char cubo[55] ="WRRBYBWWYGYOWGYYGBRRWYBOGBBBORWRYOOGORRGBGWGGYBORWOYWO";
+    char cubo[55] ="WRRBYBWWYGYOWGYYGBRRWYBOGBBBORWRYOOGORRGBGWGGYBORWLYWO";
     //char cubo[54];
     //leCubo(cubo);
     escreveCubo(cubo);
@@ -12,6 +12,11 @@ int main()
     printf("\nfazendo cubo\n\n\n");
     Cubomagico* cubot;
     cubot =criaCubo(cubo);
+    if(cubot ==NULL)
+    {
+        printf("error\n");
+        return 1;
+    }
     Movimento* moves;
     int pontosFinais[7];
     moves = montaCubo(cubot,pontosFinais);

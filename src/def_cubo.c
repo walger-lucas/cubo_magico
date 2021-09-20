@@ -19,9 +19,44 @@ const char dirLados[6][4]= {{9,18,27,36},{0,36,45,18},{0,9,45,27},
 Cubomagico* criaCubo(char pecas[54])
 {
     Cubomagico* cubo = (Cubomagico*) malloc(sizeof(Cubomagico));
-    int i;
+    int i,j;
+    int quantPecas[6]= {0};
+    char corPecas[6];
+    int cores=0,novaCor;
+
     for(i=0;i<54;i++)
+    {
+        novaCor=1;
+        for(j=0;j<cores && j<6;j++)
+        {
+            
+            if(pecas[i]==corPecas[j])
+            {
+                quantPecas[j]++;
+                novaCor=0;
+            }
+        }
+        if(novaCor)
+        {
+            if(cores==6)
+            {
+                cores++;
+                break;
+            }
+            corPecas[cores]= pecas[i];
+            quantPecas[cores]++;
+            cores++;
+        }
         (*cubo).lados[i]=pecas[i];
+    }
+    if(cores!=6)
+        return NULL;
+    for(i=0;i<6;i++)
+    {
+        if(quantPecas[i]!=9)
+            return NULL;
+    }
+
     cubo->movimentosFeitos=0;
     return cubo;
 }
