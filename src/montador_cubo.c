@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "montador_cubo.h"
 int montaCruzInicial(Cubomagico* cubo,Movimento* moves);
 void movimenta(Cubomagico* cubo, Movimento* moves,char idLado, char dir);
@@ -467,14 +468,17 @@ void movimentoFinalizador(Cubomagico* cubo, Movimento* moves,char fundo)
         return peca[0];
     if(peca[1]/9*9==lado)
         return peca[1];
+    printf("erro peca no lado");
     return 100;
  }
  char pecaForaDoLado(char *peca,int lado)
  {
-     if(peca[0]/9*9!=lado)
+    if(peca[0]/9*9!=lado)
         return peca[0];
     if(peca[1]/9*9!=lado)
         return peca[1];
+
+    printf("erro peca fora do lado");
     return 100;
  }
  void movimenta(Cubomagico* cubo, Movimento* moves,char idLado, char dir)
