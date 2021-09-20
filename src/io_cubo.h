@@ -4,7 +4,6 @@
 
     void leCubo(char lados[54]);
     void  escreveCubo(char* lados);
-    void limpaTerminal();
     void idToString(char cor[10],char idCor);
 
 #endif

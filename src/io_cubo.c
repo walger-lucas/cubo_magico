@@ -2,17 +2,8 @@
 #include <stdio.h>
 #include "io_cubo.h"
 #include "def_cubo.h"
-#include "def.h"
+
 void leLado(char lados[54],char idLado);
-//limpa terminal
-void limpaTerminal()
-{
-    #if WINDOWS
-        system(“cls”);
-    #else
-        system("clear");
-    #endif
-}
 //le os lados do cubo
 void leCubo(char lados[54])
 {
@@ -50,6 +41,19 @@ void leCubo(char lados[54])
     leLado(lados,45);
     printf("\n\n");
 
+
+}
+/*une os lados, considerando que todos que podem tem o cima como o lado cima, e o resto tem cima como o lado tras,
+cada array deve dar o as cores na sequencia:
+012
+345
+678 
+sendo que a direção cima, eh aquela onde esta o lado cima, caso seja o proprio lado cima, ou o lado baixo, essa direcao eh onde
+esta o lado tras
+o arrayCubo eh o array resultante que pode ser utilizado para criar um cubo
+*/
+void UneLadosEmArray(int arrayCubo[54],int frente[9],int tras[9],int cima[9],int baixo[9],int esquerda[9],int direita[9])
+{
 
 }
 //le o cubo na orientacao correta
