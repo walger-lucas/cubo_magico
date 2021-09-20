@@ -23,7 +23,7 @@ Entao, diversos comandos surgiram na tela siga-os.
 Para aparecer mais comandos, aperte enter.
 Quando terminar, o seu cubo estará completo, e o cubo completo deve aparecer na tela.
 
-
+# Utilizar em seu programa
 Se você quer utilizar isso em um projeto seu, pegue todos os .h e .c, menos a main.
 siga as instruções a baixo:
 -Copie e cole para o seu Makefile a parte marcada no Makefile do projeto, troque $(OBJ_DIR) pelo diretorio dos objetos, também coloque um (Diretorio onde estao os .c e .h)/ atrás de todos os .c e .h
@@ -53,16 +53,18 @@ a direcao, 1 eh horario e 0 eh anti-horario
 -depois de terminar, lembre-se de liberar moves, com
     free(moves);
 
+# Créditos
 Caso use esse projeto, lembre-se de dar os créditos, colocando o link do repositório do github, meu nome e meu email: 
 
     Lucas Walger do Nascimento
     walger.profissional@gmail.com
     https://github.com/walger-lucas/cubo_magico
 
-
+# Contato
 Caso encontre um bug, me informe, enviando um email:
 walger.profissional@gmail.com
 
+# Agradecimentos
 Agradecimentos ao Renan Cerpe do site:
     cubovelocidade.com.br
 Por ter me ensinado a resolver o cubo mágico
