@@ -4,7 +4,7 @@
 #include <stdio.h>
 int main()
 {
-    //char cubo[55] ="WRRBYBWWYGYOWGYYGBRRWYBOGBBBORWRYOOGORRGBGWGGYBORWLYWO";
+    //char cubo[55] ="WBOGBYGRWGWBORROWYROGOYYGGOBBWYORRRROGWWBWGBRYYYGYBWOB";
     char cubo[54];
     leCubo(cubo);
     escreveCubo(cubo);
