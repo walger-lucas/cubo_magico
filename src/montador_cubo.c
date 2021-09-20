@@ -11,17 +11,17 @@ char pecaForaDoLado(char *peca,int lado);
  int montaLateralAmarela(Cubomagico* cubo, Movimento* moves);
  int montaQuinas(Cubomagico* cubo, Movimento* moves);
  int finalizaCubo(Cubomagico* cubo, Movimento* moves);
- Movimento* montaCubo(Cubomagico* cubo)
+ Movimento* montaCubo(Cubomagico* cubo,int pontosFinais[7])
  {
      Movimento* moves;
-     moves = (Movimento*) malloc(sizeof(Movimento)*1000);
-    montaCruzInicial(cubo,moves);
-    montaPrimAndar(cubo,moves);
-    montaSegAndar(cubo,moves);
-    montaCruzAmarela(cubo, moves);
-    montaLateralAmarela(cubo,moves);
-    montaQuinas(cubo,moves);
-    finalizaCubo(cubo,moves);
+     moves = (Movimento*) malloc(sizeof(Movimento)*500);
+    pontosFinais[0] =montaCruzInicial(cubo,moves);
+    pontosFinais[1] =montaPrimAndar(cubo,moves);
+    pontosFinais[2] =montaSegAndar(cubo,moves);
+    pontosFinais[3] =montaCruzAmarela(cubo, moves);
+    pontosFinais[4] =montaLateralAmarela(cubo,moves);
+    pontosFinais[5] =montaQuinas(cubo,moves);
+    pontosFinais[6] =finalizaCubo(cubo,moves);
     return moves;
 
  }
@@ -146,6 +146,7 @@ char pecaForaDoLado(char *peca,int lado);
     
     char aux;
     int corretos=0;
+    //conta os corretos e tira so errados da base
      for(i=2;i<9;i+=2)
     {
         outPecas= pegaOutrosLados(cubo,i,&lados);
@@ -184,6 +185,7 @@ char pecaForaDoLado(char *peca,int lado);
         montaPrimAndar(cubo,moves);
     return pegaMovs(cubo);
  }
+ //movimentos para o segundo andar
 void movimentoSegAndar(Cubomagico* cubo, Movimento* moves, char ladoFrente,char ladoCorFrente,char ladoCorCima)
 {
     gira(cubo,moves,45,ladoFrente,ladoContrarioDoLado(cubo,ladoCorCima));
@@ -197,10 +199,12 @@ void movimentoSegAndar(Cubomagico* cubo, Movimento* moves, char ladoFrente,char 
     movimenta(cubo,moves,45,0);
     gira(cubo,moves,ladoCorFrente,ladoCorCima,0);
 }
+//monta o segundo andar
 int montaSegAndar(Cubomagico* cubo, Movimento* moves)
 {
     char ladoFrente,ladoCorFrente,ladoCorCima,*outLados;
     int i,j,lados;
+    //procura no terceiro anel e os monta, procura 4 vezes para encontrar todos
     for(j=0;j<4;j++)
     {
          for(i=1;i<8;i+=2)
@@ -217,6 +221,7 @@ int montaSegAndar(Cubomagico* cubo, Movimento* moves)
          }
     }
     int pecaAtual;
+    //procura por pecas erradas no seg andar, dps as troca e coloca a certa
     for(i=0;i<4;i++)
     {
         pecaAtual=pegaPeca(cubo,dirPeloLado(0,0,i),45,3); 
@@ -245,6 +250,7 @@ int montaSegAndar(Cubomagico* cubo, Movimento* moves)
     }
     return pegaMovs(cubo);
 }
+//sequencia de movimentos da cruz amarela
 void movimentosCruzAmarela(Cubomagico* cubo, Movimento* moves,char frente, char cima)
 {
     movimenta(cubo,moves,frente,1);
@@ -255,8 +261,10 @@ void movimentosCruzAmarela(Cubomagico* cubo, Movimento* moves,char frente, char 
     movimenta(cubo,moves,frente,0);
 
 }
+//monta a cruz amarela no topo
 int montaCruzAmarela(Cubomagico* cubo, Movimento* moves)
 {
+    //caso so haja o centro pronto fazer o movimento uma vez
     if(corDaPecaPeloId(cubo,45+1)!=corDaPecaPeloId(cubo,45) &&
     corDaPecaPeloId(cubo,45+3)!=corDaPecaPeloId(cubo,45) &&
     corDaPecaPeloId(cubo,45+5)!=corDaPecaPeloId(cubo,45) &&
@@ -264,6 +272,7 @@ int montaCruzAmarela(Cubomagico* cubo, Movimento* moves)
         movimentosCruzAmarela(cubo,moves,9,0);
 
     int i;
+    //tenta encontrar o L invertido na orientação certa
     for(i=0;i<4;i++)
     {
         if(corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),5))==corDaPecaPeloId(cubo,45) &&
@@ -275,6 +284,7 @@ int montaCruzAmarela(Cubomagico* cubo, Movimento* moves)
             break;
         }   
     }
+    // tenta encontrar uma linha reta amarela na orientação certa e faz o movimento
     for(i=0;i<4;i++)
     {
         if(corDaPecaPeloId(cubo,pegaPeca(cubo,45,dirPeloLado(45,45,i),3))==corDaPecaPeloId(cubo,45) &&
@@ -288,6 +298,7 @@ int montaCruzAmarela(Cubomagico* cubo, Movimento* moves)
     }
     return pegaMovs(cubo);
 }
+//sequencia de movimentos lateral amarela
 void movimentosLateralAmarela(Cubomagico* cubo, Movimento* moves,char frente, char cima)
 {
     char direita= dirPeloLado(frente,cima,3);
@@ -306,11 +317,12 @@ int montaLateralAmarela(Cubomagico* cubo, Movimento* moves)
     char frente;
     for(i=0;i<4;i++)
     {
+        //se encontrar os casos 1, 2, 3, 4 ou 5, faça o movimento na orientação encontrada OBS: a orientacao eh de ponta cabeca
         frente = dirPeloLado(45,45,i);
         if((corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) == corDaPecaPeloId(cubo,45) //1
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) == corDaPecaPeloId(cubo,45)
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) != corDaPecaPeloId(cubo,45)
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) != corDaPecaPeloId(cubo,45)) || //2
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) == corDaPecaPeloId(cubo,45)   
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) != corDaPecaPeloId(cubo,45)   
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) != corDaPecaPeloId(cubo,45)) || //2  
         (corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) == corDaPecaPeloId(cubo,45) 
         &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) == corDaPecaPeloId(cubo,45)
         &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) != corDaPecaPeloId(cubo,45)
@@ -319,17 +331,17 @@ int montaLateralAmarela(Cubomagico* cubo, Movimento* moves)
         &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) == corDaPecaPeloId(cubo,45)
         &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) != corDaPecaPeloId(cubo,45)
         &&corDaPecaPeloId(cubo,pegaPeca(cubo,frente,45,2)) == corDaPecaPeloId(cubo,45)) || //4 E 5
-        (corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,1),45,8)) == corDaPecaPeloId(cubo,45) 
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,6)) != corDaPecaPeloId(cubo,45)
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,8)) != corDaPecaPeloId(cubo,45)
-        &&corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,1),45,2)) == corDaPecaPeloId(cubo,45))) 
+        (corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,3),45,8)) == corDaPecaPeloId(cubo,45) 
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,2)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,45,frente,4)) != corDaPecaPeloId(cubo,45)
+        &&corDaPecaPeloId(cubo,pegaPeca(cubo,dirPeloLado(45,frente,3),45,2)) == corDaPecaPeloId(cubo,45))) 
         {
             movimentosLateralAmarela(cubo,moves,frente,45);
             break;
         }
     }
     int j;
-    for(j=0;j<2;j++)
+    for(j=0;j<2;j++)//tenta encontrar a posicao 6 e 7 duas vezes, e faz o movimento da lateral amarela
     {
         for(i=0;i<4;i++)
         {
@@ -351,6 +363,7 @@ int montaQuinas(Cubomagico* cubo, Movimento* moves)
 {
     int i,prontas=0;
     char ladoAtual,ladoPossivel;
+    //tenta encontrar um lado com duas cores iguais, no terceiro anel, e o marca como lado possivel, tambem guarda quantos casos possiveis estao prontos
     for(i=0;i<4;i++)
     {
         ladoAtual= dirPeloLado(45,45,i);
@@ -360,17 +373,17 @@ int montaQuinas(Cubomagico* cubo, Movimento* moves)
            ladoPossivel=ladoAtual; 
         }
     }
-    
+    //caso nem todas as quinas estiverem prontas, mas ao menos uma estar, faz o movimento nesse lado possivel
     if(prontas>0 && prontas<4)
     {
         movimentosQuinas(cubo,moves,ladoPossivel);
-        gira(cubo,moves,45,9,ladoDaCor(cubo,corDaPecaPeloId(cubo,13)));
+        gira(cubo,moves,45,9,ladoDaCor(cubo,corDaPecaPeloId(cubo,13)));//deixa os lados nos lados certos
     }
-    else if(prontas==4)
+    else if(prontas==4) // caso esteja tudo pronto, apenas deixa os lados apontando para os locais certos
     {
         gira(cubo,moves,45,9,ladoDaCor(cubo,corDaPecaPeloId(cubo,13)));
     }
-    else
+    else //caso nada esteja certo, faz o movimento com o lado qualquer e pede que tudo seja feito novamente
     {
         movimentosQuinas(cubo,moves,9);
         montaQuinas(cubo,moves);
@@ -378,6 +391,7 @@ int montaQuinas(Cubomagico* cubo, Movimento* moves)
     return pegaMovs(cubo);
     
 }
+//sequencia de movimentos para montar as quinas
 void movimentosQuinas(Cubomagico* cubo, Movimento* moves,char baixo)
 {
     char direita = dirPeloLado(baixo,45,3);
@@ -400,7 +414,7 @@ int finalizaCubo(Cubomagico* cubo, Movimento* moves)
 {
     int i,encontrou=0;
     char ladoAtual;
-    for(i=0;i<4;i++)
+    for(i=0;i<4;i++)// tenta encontrar um lado completo e faz os movimentos finais
     {
         ladoAtual = dirPeloLado(45,45,i);
         if(corDaPecaPeloId(cubo,pegaPeca(cubo,ladoAtual,45,1))==corDaPecaPeloId(cubo,ladoAtual))
@@ -410,13 +424,14 @@ int finalizaCubo(Cubomagico* cubo, Movimento* moves)
             break;
         } 
     }
-    if(!encontrou)
+    if(!encontrou)// caso nao encontre, faz o movimento em qualquer lado
     {
         movimentoFinalizador(cubo,moves,9);
         finalizaCubo(cubo,moves);
     }
     return pegaMovs(cubo);
 }
+//sequencia final para terminar o cubo
 void movimentoFinalizador(Cubomagico* cubo, Movimento* moves,char fundo)
 {
     char face= ladoContrarioDoLado(cubo,fundo);

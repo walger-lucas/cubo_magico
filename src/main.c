@@ -4,27 +4,40 @@
 #include <stdio.h>
 int main()
 {
-    //char cubo[55] ="WYRROGGYBGBRBROBOYRWBBWGORBBYYYWBGWOOOYOWGGRWYGYWRWGRO";
-    char cubo[54];
-    leCubo(cubo);
+    char cubo[55] ="WRRBYBWWYGYOWGYYGBRRWYBOGBBBORWRYOOGORRGBGWGGYBORWOYWO";
+    //char cubo[54];
+    //leCubo(cubo);
     escreveCubo(cubo);
+    printf("%s",cubo);
     printf("\nfazendo cubo\n\n\n");
     Cubomagico* cubot;
     cubot =criaCubo(cubo);
-    
-
     Movimento* moves;
-    
-    moves = montaCubo(cubot);
-    int i,j=0;
+    int pontosFinais[7];
+    moves = montaCubo(cubot,pontosFinais);
+    int i;
     char nome[10];
     printf("%d\n\n",pegaMovs(cubot));
     for(i=0;i<pegaMovs(cubot);i++)
     {
         printf("%f /100\n",i/(float)pegaMovs(cubot)*100);
-        
-            idToString(nome,corDaPecaPeloId(cubot,moves[i].idLado));
-            printf("%s %s\n",nome,(moves[i].direcao)? "Horario":"Anti-Horario");
+        idToString(nome,corDaPecaPeloId(cubot,moves[i].idLado));
+        printf("%s %s\n",nome,(moves[i].direcao)? "Horario":"Anti-Horario");
+
+        if(i==pontosFinais[0])
+            printf("Cruz Inicial Terminada\n");
+        else if(i==pontosFinais[1]-1)
+            printf("Lado Inicial Terminado\n");
+        else if(i==pontosFinais[2]-1)
+            printf("Segundo Andar Terminado\n");
+        else if(i==pontosFinais[3]-1)
+            printf("Cruz Final Terminada\n");
+        else if(i==pontosFinais[4]-1)
+            printf("Lado Final Completo\n");
+        else if(i==pontosFinais[5]-1)
+            printf("Quinas Ajustadas\n");
+        else if(i==pontosFinais[6]-1)
+            printf("Cubo Completo\n");
         getchar();
         
 

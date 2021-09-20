@@ -6,7 +6,7 @@ typedef struct{
     char direcao;
 } Movimento;
 
- Movimento* montaCubo(Cubomagico* cubo);
+ Movimento* montaCubo(Cubomagico* cubo,int pontosFinais[7]);
 
 
 
