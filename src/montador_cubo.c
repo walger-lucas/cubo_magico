@@ -416,21 +416,25 @@ void movimentoFinalizador(Cubomagico* cubo, Movimento* moves,char fundo);
 int finalizaCubo(Cubomagico* cubo, Movimento* moves)
 {
     int i,encontrou=0;
-    char ladoAtual;
+    char ladoAtual,ladoSera;
     for(i=0;i<4;i++)// tenta encontrar um lado completo e faz os movimentos finais
     {
         ladoAtual = dirPeloLado(45,45,i);
         if(corDaPecaPeloId(cubo,pegaPeca(cubo,ladoAtual,45,1))==corDaPecaPeloId(cubo,ladoAtual))
         {
-            encontrou = 1;
-            movimentoFinalizador(cubo,moves,ladoAtual);
-            break;
+            encontrou++;
+            ladoSera=ladoAtual;
         } 
     }
-    if(!encontrou)// caso nao encontre, faz o movimento em qualquer lado
+    
+    if(encontrou==0)// caso nao encontre, faz o movimento em qualquer lado
     {
         movimentoFinalizador(cubo,moves,9);
         finalizaCubo(cubo,moves);
+    }
+    else if(encontrou<4)
+    {
+        movimentoFinalizador(cubo,moves,ladoSera);
     }
     return pegaMovs(cubo);
 }
